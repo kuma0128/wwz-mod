@@ -2,7 +2,7 @@
 setlocal
 chcp 65001 >nul
 
-set "MOD_SCRIPT=%~dp0WWZ_X90_Offline_Mod.ps1"
+set "MOD_SCRIPT=%~dp0WWZ_X90_Online_Mod.ps1"
 set "MOD_PAYLOAD=%~dp0payload\initial_release.sslbundle.deflate"
 
 if not exist "%MOD_SCRIPT%" goto :not_extracted
@@ -20,7 +20,7 @@ echo [ERROR] Required MOD files were not found.
 echo.
 echo Do not run this CMD directly inside the ZIP file.
 echo Right-click the ZIP, select "Extract All", then run
-echo Install_Offline_Mod.cmd from the extracted folder.
+echo Install_Online_Mod.cmd from the extracted folder.
 echo.
 echo Current location: %~dp0
 echo No game files were changed.

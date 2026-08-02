@@ -2,7 +2,7 @@
 setlocal
 chcp 65001 >nul
 
-set "MOD_SCRIPT=%~dp0WWZ_X90_Offline_Mod.ps1"
+set "MOD_SCRIPT=%~dp0WWZ_X90_Online_Mod.ps1"
 
 if not exist "%MOD_SCRIPT%" goto :not_extracted
 

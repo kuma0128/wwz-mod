@@ -30,11 +30,12 @@ $script:Targets = @(
         OriginalCompressedSize = [uint32]3816685
         OriginalUncompressedSize = [uint32]14452135
         OriginalCompressedSha256 = '402A2BC4C421B0B5CE9AA81217CCBB102ED6F386BE42D77E98CD9D7F4D66719A'
-        ModCrc = [Convert]::ToUInt32('7C67602D', 16)
-        ModCompressedSize = [uint32]3816227
-        ModUncompressedSize = [uint32]14452153
-        ModCompressedSha256 = 'FF77BF19EA1BECF3D9F6872AC460EDB40C01EA94AB928D8DC4B8311F98DC9F1A'
+        ModCrc = [Convert]::ToUInt32('E9213169', 16)
+        ModCompressedSize = [uint32]3816225
+        ModUncompressedSize = [uint32]14452135
+        ModCompressedSha256 = '9A28BD916A8D827E965384442D7327D353665CE7B8FD5349ACD2209729D12FC2'
         OldStates = @(
+            [pscustomobject]@{ Name = 'V4x90Full'; Crc = [Convert]::ToUInt32('7C67602D', 16); CompressedSize = [uint32]3816227; UncompressedSize = [uint32]14452153; CompressedSha256 = 'FF77BF19EA1BECF3D9F6872AC460EDB40C01EA94AB928D8DC4B8311F98DC9F1A' }
             [pscustomobject]@{ Name = 'V4x30'; Crc = [Convert]::ToUInt32('EAC09A21', 16); CompressedSize = [uint32]3816227; UncompressedSize = [uint32]14452153; CompressedSha256 = 'DD5BB1AD1F894B6A5EC9044BAD00EC54758166F8318C59C5B63BDF64FEC70043' }
             [pscustomobject]@{ Name = 'V3'; Crc = [Convert]::ToUInt32('4C27F0CB', 16); CompressedSize = [uint32]3816225; UncompressedSize = [uint32]14452153; CompressedSha256 = '7BCE68BA8FC0DE55EC99747290310B867ADAE93D54115396D3FFC9BC0AD6EB80' }
             [pscustomobject]@{ Name = 'V2'; Crc = [Convert]::ToUInt32('AA33C6D3', 16); CompressedSize = [uint32]3816228; UncompressedSize = [uint32]14452135; CompressedSha256 = '20CB667D88B2B9C269B4EAC131D50749CD6CA700BA9FABBECF70884C27F8FCB4' }
@@ -428,7 +429,7 @@ switch ($Action) {
 
         if (Test-AllStates $states 'Mod') {
             Remove-LegacyFirewallBlock
-            Write-Ok "x$($script:Multiplier) mod $($script:ModVersion) is already installed."
+            Write-Ok "x$($script:Multiplier) mod $($script:ModVersion) friends-only compatibility build is already installed."
             break
         }
 
@@ -475,8 +476,8 @@ switch ($Action) {
         }
 
         Remove-LegacyFirewallBlock
-        Write-Ok "Applied x$($script:Multiplier) mod $($script:ModVersion) (final-reward / weapon-XP instructions and module lengths verified)."
-        Write-Host 'Always choose OFFLINE in the game menu and play with bots. This build does NOT block the game from going online, so make sure you never enter online play while the mod is installed.' -ForegroundColor Yellow
+        Write-Ok "Applied x$($script:Multiplier) mod $($script:ModVersion) friends-only compatibility build (reward modules kept size-stable)."
+        Write-Host 'Use this build only in private / friends-only sessions with matching installs. Do NOT use public matchmaking.' -ForegroundColor Yellow
     }
 
     'Uninstall' {
@@ -535,14 +536,14 @@ switch ($Action) {
     'Verify' {
         $states = Get-TargetStates $pakPath
         if (Test-AllStates $states 'Mod') {
-            Write-Ok "x$($script:Multiplier) mod $($script:ModVersion) slim: release bundle is valid (module lengths and reward instructions included)."
-            Write-Info 'This build does not install a firewall rule. Always choose OFFLINE in the game menu.'
+            Write-Ok "x$($script:Multiplier) mod $($script:ModVersion) friends-only compatibility build is valid (reward modules are size-stable)."
+            Write-Info 'This build does not install a firewall rule. Use private / friends-only sessions only.'
         }
         elseif (Test-AllStates $states 'Original') {
             Write-Info 'Game data is unmodified (mod not installed).'
         }
-        elseif ((Test-AllStates $states 'V4x30') -or (Test-AllStates $states 'V3') -or (Test-AllStates $states 'V2') -or (Test-LegacyV1State $states)) {
-            throw "Detected an older mod version ($(Get-StateSummary $states)). Run Install_Offline_Mod.cmd of $($script:ModVersion) to upgrade."
+        elseif ((Test-AllStates $states 'V4x90Full') -or (Test-AllStates $states 'V4x30') -or (Test-AllStates $states 'V3') -or (Test-AllStates $states 'V2') -or (Test-LegacyV1State $states)) {
+            throw "Detected an older mod version ($(Get-StateSummary $states)). Run this build's installer again to upgrade."
         }
         else {
             throw "initial.pak is in an unexpected state: $(Get-StateSummary $states)"
