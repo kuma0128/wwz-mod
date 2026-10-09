@@ -6,6 +6,12 @@ Packaged World War Z X90 mod installers, version 4.1.
 
 - `WWZ_X90_Online_Mod_4.1_Slim_NoFirewall/` - expanded online installer files.
 - `dist/v4.1/` - ready-to-download release archives and SHA-256 checksums.
+- `work/` - payload build tools, verification scripts, original build inputs,
+  generated payloads, and the expanded offline installer. See
+  [work/README.md](work/README.md) for build instructions.
+- `release-media/` - the Nexus upload draft, cover image, and cover generation script.
+
+This private repository preserves the installers and the local build files.
 
 ## Release archives
 

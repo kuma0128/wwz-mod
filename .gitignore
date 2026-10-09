@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+*.log
+.claude/
+work/payloads_verify/
+work/source/_quarantine/
